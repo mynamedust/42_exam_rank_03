@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <unistd.h>
 #include <stdarg.h>
 
 int	ft_putstr(char *str)
@@ -10,6 +10,7 @@ int	ft_putstr(char *str)
 	while (*str)
 	{
 		write(1, str, 1);
+		str++;
 		len++;
 	}
 	return (len);
@@ -23,7 +24,7 @@ void	ft_putnbr(long long num, int base, int *count)
 	if (num < 0)
 	{
 		num *= -1;
-		count += write(1, "-", 1);
+		*count += write(1, "-", 1);
 	}
 	if (num > base)
 		ft_putnbr((num/base), base, count);
@@ -55,4 +56,13 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(list);
 	return (count);
+}
+int main()
+{
+	char	*s = "THIS IS STRING";
+	int		num = 90321;
+	int 	count;
+
+	count = ft_printf("Now we see that %s, and know that %d times we breath into %x hours\n", s, num, 6);
+	ft_printf("count %% - %d\n", count);
 }
